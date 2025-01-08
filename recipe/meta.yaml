@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupitest-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/jupitest-{{ version }}.tar.gz
   sha256: 6b272768a955a2f1cc985f104ebfd8daabe060d0cb3bc392e5c68d23b498ed4c
 
 build:
@@ -14,14 +14,15 @@ build:
     - jupitest = jupitest.__main__:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.5
+    - python {{ python_min }}
     - pip
+    - setuptools
   run:
-    - python >=3.5
+    - python >={{ python_min }}
     - tkf
 
 test:
@@ -33,6 +34,7 @@ test:
     # - jupitest --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/pyrustic/jupitest
